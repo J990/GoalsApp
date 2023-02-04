@@ -1,11 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import AddGoalButton from './components/AddGoalButton';
+import Goal from './components/Goal';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.goalsContainer}></View>
+      <Text style={styles.title}>Today's Goals</Text>
+      <View style={styles.goalsContainer}>
+        <Goal name={"Goal 1"} />
+      </View>
       <View style={styles.addGoalContainer}>
         <AddGoalButton createGoal={() => {}} />
       </View>
@@ -17,8 +20,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1
   },
+  title: {
+    marginTop: 64,
+    fontSize: 36,
+    textAlign: "center"
+  },
   goalsContainer: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "orange"
   },
   addGoalContainer: {
     
