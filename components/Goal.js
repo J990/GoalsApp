@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Checkbox from './Checkbox';
 
-function Goal({ name }) {
+function Goal(props) {
 
-    const [goalName, setName] = useState(name);
+    // Can remove state later
+    // Only used to change the goal name
+    // Which we won't need to do
+    const [goalName, setName] = useState(props.name);
 
     function clear() {
         setName("cleared");
