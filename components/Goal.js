@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Checkbox from './Checkbox';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 function Goal(props) {
 
@@ -9,21 +8,37 @@ function Goal(props) {
     // Which we won't need to do
     const [isChecked, setChecked] = useState(false);
     const [textStyle, setTextStyle] = useState(styles.text);
+    const [symbol, setSymbol] = useState("☐");
 
     function clear() {
         setChecked(true);
         setTextStyle([styles.text, styles.pressed]);
+        setSymbol("☑");
     }
 
     function unclear() {
         setChecked(false);
         setTextStyle(styles.text);
+        setSymbol("☐");
+    }
+
+    function check() {
+        if (isChecked) unclear();
+        else clear();
+        setChecked(!isChecked);
+    }
+
+    function openDeleteModal() {
+        
     }
 
     return (
         <View style={styles.container}>
-            <Text style={textStyle}>{props.name}</Text>
-            <Checkbox enable={clear} disable={unclear} />
+            <Pressable style={styles.pressableArea} onPress={check} onLongPress={openDeleteModal}>
+                <Text style={textStyle}>{props.name}</Text>
+                {/* <Checkbox enable={clear} disable={unclear} /> */}
+                <Text style={styles.checkbox}>{symbol}</Text>
+            </Pressable>
         </View>
     );
 }
@@ -39,16 +54,28 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
     },
+    pressableArea: {
+        flexDirection: "row",
+        flex: 1,
+        justifyContent: "space-between",
+        alignSelf: "center",
+        alignItems: "center",
+        padding: 2,
+    },
     text: {
         fontSize: 24,
-        padding: 0,
         width: "80%",
-        color: "#ee8ac0",
-        fontWeight: "bold"
+        // color: "#ee8ac0",
+        color: "white",
+        fontWeight: "bold",
     },
     pressed: {
         textDecorationLine: "line-through",
-    }
+    },
+    checkbox: {
+        fontSize: 36,
+        color: "white",
+    },
 });
 
 export default Goal;
