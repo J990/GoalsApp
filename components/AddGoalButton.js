@@ -18,15 +18,14 @@ function AddGoalButton(props) {
 
 const styles = StyleSheet.create({
     outerContainer: {
-        borderWidth: 2,
-        borderColor: "red",
+        backgroundColor: "#4c4c4c",
         padding: 12,
     },
     text: {
         textAlign: "center",
         fontSize: 24,
         fontWeight: "bold",
-        color: "red"
+        color: "white"
     },
 });
 

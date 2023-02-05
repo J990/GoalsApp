@@ -1,3 +1,4 @@
+import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import AddGoalButton from './components/AddGoalButton';
@@ -23,9 +24,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Today's Goals</Text>
+      <StatusBar style='light' backgroundColor='#20bbff' />
       <View style={styles.goalsContainer}>
-        <Goal name={"Goal 1"} />
+        <Text style={styles.title}>Today's Goals</Text>
         <FlatList
           data={goals}
           renderItem={(data) => {
@@ -37,8 +38,12 @@ export default function App() {
           style={styles.goalInput}
           onChangeText={updateGoalInput}
           value={newGoalName}
-          cursorColor="red"
-          placeholder="New Goal"/>
+          cursorColor="white"
+          placeholder="New Goal"
+          placeholderTextColor="#ffffff"
+          returnKeyLabel="go"
+          returnKeyType="go"
+          onSubmitEditing={addGoal} />
         <AddGoalButton createGoal={addGoal} />
       </View>
     </View>
@@ -47,23 +52,33 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#20bbff"
   },
   title: {
-    marginTop: 64,
+    marginTop: 32,
     fontSize: 36,
-    textAlign: "center"
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 8
   },
   goalsContainer: {
     flex: 1,
-    backgroundColor: "orange"
+    backgroundColor: "#007fb7",
+    paddingTop: 32,
+    paddingBottom: 16
   },
   newGoalContainer: {
     margin: 8,
   },
   goalInput: {
     marginBottom: 8,
-    borderBottomColor: "red",
-    borderBottomWidth: 2
+    borderBottomColor: "white",
+    color: "#ee8ac0",
+    borderBottomWidth: 2,
+    fontSize: 24,
+    paddingBottom: 8,
+    fontWeight: "bold",
   },
 });

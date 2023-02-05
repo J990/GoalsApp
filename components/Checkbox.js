@@ -4,23 +4,24 @@ import { Pressable, StyleSheet, View, Text } from 'react-native';
 function Checkbox({ enable, disable }) {
 
     const [checked, setChecked] = useState(false);
-    const [symbol, setSymbol] = useState("Unchecked");
+    const [symbol, setSymbol] = useState("☐");
 
     function check() {
         setChecked(!checked);
         if (checked) {
-            disable(); setSymbol("Unchecked");
+            disable();
+            setSymbol("☐");
         }
         else {
             enable();
-            setSymbol("Checked")
+            setSymbol("☑")
         }
     }
 
     return (
         <View style={styles.outerContainer}>
-            <Pressable onPress={check}>
-                <Text>{symbol}</Text>
+            <Pressable style={styles.pressableArea} onPress={check}>
+                <Text style={styles.symbol}>{symbol}</Text>
             </Pressable>
         </View>
     );
@@ -29,7 +30,14 @@ function Checkbox({ enable, disable }) {
 const styles = StyleSheet.create({
     outerContainer: {
 
-    }
+    },
+    pressableArea: {
+        padding: 0
+    },
+    symbol: {
+        fontSize: 48,
+        color: "white",
+    },
 });
 
 export default Checkbox;
