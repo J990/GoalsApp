@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import GoalModal from './GoalModal';
 
 function Goal(props) {
 
@@ -9,6 +10,7 @@ function Goal(props) {
     const [isChecked, setChecked] = useState(false);
     const [textStyle, setTextStyle] = useState(styles.text);
     const [symbol, setSymbol] = useState("☐");
+    const [modalVisible, setModalVisibility] = useState(false);
 
     function clear() {
         setChecked(true);
@@ -29,14 +31,18 @@ function Goal(props) {
     }
 
     function openDeleteModal() {
-        
+        setModalVisibility(true);
+    }
+
+    function closeDeleteModal() {
+        setModalVisibility(false);
     }
 
     return (
         <View style={styles.container}>
+            <GoalModal isVisible={modalVisible} onClose={closeDeleteModal} goalID={props.id} remove={props.onDelete}/>
             <Pressable style={styles.pressableArea} onPress={check} onLongPress={openDeleteModal}>
                 <Text style={textStyle}>{props.name}</Text>
-                {/* <Checkbox enable={clear} disable={unclear} /> */}
                 <Text style={styles.checkbox}>{symbol}</Text>
             </Pressable>
         </View>

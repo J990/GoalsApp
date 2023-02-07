@@ -18,6 +18,12 @@ export default function App() {
     setNewGoalName("");
   }
 
+  function removeGoal(id) {
+    setGoals((currentGoals) => {
+      return currentGoals.filter((goal) => {return id != goal.id});
+    });
+  }
+
   function updateGoalInput(text) {
     setNewGoalName(text);
   }
@@ -30,7 +36,7 @@ export default function App() {
         <FlatList
           data={goals}
           renderItem={(data) => {
-            return <Goal name={data.item.text} id={data.item.id}/>;
+            return <Goal name={data.item.text} id={data.item.id} onDelete={removeGoal}/>;
           }} />
       </View>
       <View style={styles.newGoalContainer}>
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
   goalInput: {
     marginBottom: 8,
     borderBottomColor: "white",
-    color: "#ee8ac0",
+    color: "white",
     borderBottomWidth: 2,
     fontSize: 24,
     paddingBottom: 8,
