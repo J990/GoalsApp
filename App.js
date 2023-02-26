@@ -1,20 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 import AddGoalButton from './components/AddGoalButton';
 import Goal from './components/Goal';
+import { initialiseGoalsData, initialiseID, setGoalsData, getGoalsData, getID, incrementID } from './data/data-service';
 
 export default function App() {
 
   const [goals, setGoals] = useState([]);
   const [newGoalName, setNewGoalName] = useState("");
+  const [isInitialised, setInitialised] = useState(false);
 
-  function addGoal() {
+  async function addGoal() {
     if (newGoalName == "") return;
-    setGoals((currentGoals => [
-      ...currentGoals,
-      {text: newGoalName, id: Math.random().toString()}
-    ]));
+    const newID = await incrementID();
+    let tempGoals = goals;
+    console.log(goals);
+    console.log(tempGoals);
+    tempGoals.push({id: newID, name: newGoalName, ticked: false});
+    const newGoals = tempGoals;
+    setGoals(newGoals);
+    await setGoalsData(newGoals);
     setNewGoalName("");
   }
 
@@ -28,6 +34,15 @@ export default function App() {
     setNewGoalName(text);
   }
 
+  useEffect(() => {
+    if (!isInitialised) {
+      if (!getGoalsData()) initialiseGoalsData();
+      else setGoals(getGoalsData());
+      if (!getID()) initialiseID();
+      setInitialised(true);
+    }
+  }, [() => {}])
+
   return (
     <View style={styles.container}>
       <StatusBar style='light' backgroundColor='#20bbff' />
@@ -36,7 +51,7 @@ export default function App() {
         <FlatList
           data={goals}
           renderItem={(data) => {
-            return <Goal name={data.item.text} id={data.item.id} onDelete={removeGoal}/>;
+            return <Goal name={data.item.name} id={data.item.id} onDelete={removeGoal}/>;
           }} />
       </View>
       <View style={styles.newGoalContainer}>
@@ -76,7 +91,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16
   },
   newGoalContainer: {
-    margin: 8,
+    marginBottom: 8,
+    margin: 16
   },
   goalInput: {
     marginBottom: 8,

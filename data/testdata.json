@@ -1,0 +1,14 @@
+{
+    "days": [
+        {
+            "date": "2023/02/07",
+            "goals": [
+                {
+                    "id": 1,
+                    "name": "Goal 1",
+                    "ticked": false
+                }
+            ]
+        }
+    ]
+}

@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     outerContainer: {
         backgroundColor: "#4c4c4c",
         padding: 12,
+        borderRadius: 16,
     },
     text: {
         textAlign: "center",

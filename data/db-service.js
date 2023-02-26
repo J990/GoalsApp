@@ -1,8 +1,8 @@
 import * as SQLite from 'expo-sqlite';
 
-const goalsTableName = "Goals";
-const daysTableName = "Days";
-const goalDaysTableName = "GoalDays";
+const goalTableName = "Goal";
+const dayTableName = "Day";
+const goalDayTableName = "GoalDay";
 
 export const getDBConnection = () => {
     return SQLite.openDatabase("goal-data.db");
@@ -10,17 +10,17 @@ export const getDBConnection = () => {
 
 export const createTables = (db) => {
 
-    const goalsQ = `CREATE TABLE IF NOT EXISTS ${goalsTableName}(
+    const goalQ = `CREATE TABLE IF NOT EXISTS ${goalTableName}(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL
     ); `;
 
-    const daysQ = `CREATE TABLE IF NOT EXISTS ${daysTableName}(
+    const dayQ = `CREATE TABLE IF NOT EXISTS ${dayTableName}(
         id INTEGER PRIMARY KEY AUTINCREMENT,
         date DATE NOT NULL
     ); `;
 
-    const goalDaysQ = `CREATE TABLE IF NOT EXISTS ${goalDaysTableName}(
+    const goalDayQ = `CREATE TABLE IF NOT EXISTS ${goalDayTableName}(
         dayID INTEGER NOT NULL,
         goalID INTEGER NOT NULL,
         checked BIT NOT NULL,
@@ -28,15 +28,15 @@ export const createTables = (db) => {
     ); `;
 
     db.transaction(tx => {
-        tx.executeSql(goalsQ);
+        tx.executeSql(goalQ);
     }, (err) => {console.log(err);});
 
     db.transaction(tx => {
-        tx.executeSql(daysQ);
+        tx.executeSql(dayQ);
     }, (err) => {console.log(err);});
 
     db.transaction(tx => {
-        tx.executeSql(goalDaysQ);
+        tx.executeSql(goalDayQ);
     }, (err) => {console.log(err);});
 
 }
